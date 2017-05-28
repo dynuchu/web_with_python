@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Planets in the Star Wars universe</title>
+    <link rel="shortcut icon" type="image/png" href="http://a.dilcdn.com/sw/favicon-44660648232d.ico"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Star Wars universe planets</h1>
+    </div>
+    <form method="get">
+
+
+    <div class="container">
+        <button type="submit" class="btn btn-primary" id="btn_prev" >Previous</button>
+        <button type="submit" class="btn btn-primary" id="btn_next" target="_blank">Next</button>
+        <br><br>
+        <table class="table table-bordered">
+
+        <tr class="first_row">
+            <td>Name</td>
+            <td>Diameter</td>
+            <td>Climate</td>
+            <td>Gravity</td>
+            <td>Terrain</td>
+            <td>Water</td>
+            <td>Population</td>
+            <td>Residents</td>
+        </tr>
+
+        {% for planet in response['results'] %}
+        <tr class="planet_data">
+            <td>{{ planet['name'] }}</td>
+            <td>{{ planet['diameter']|int/1000 ~ " km"}}</td>
+            <td>{{ planet['climate'] }}</td>
+            <td>{{ planet['gravity'] }}</td>
+            <td>{{ planet['terrain'] }}</td>
+            <td>{{ '{:.0%}'.format(planet['surface_water']|int/100) }}</td>
+            <td>{{ '{:,}'.format(planet['population']|int) ~ " people" }}</td>
+            {% if planet['residents'] %}
+            <td id="residents_row">
+                <button type="button" class="btn btn-default residents_btn" id="residents_btn" data-toggle="modal" data-target="#residents">{{ planet['residents']|length }} Residents </button>
+                <button class="loop_index"> {{loop.index}} </button></td>
+            {% else %}
+            <td><div class="loop_index"> {{loop.index}} </div>No known residents</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+</form>
+
+<div class="modal fade" id="residents" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Residents of ...</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+            <tr class="resident_first_row">
+                <td>Name</td>
+                <td>Height</td>
+                <td>Mass</td>
+                <td>Skin color</td>
+                <td>Hair color</td>
+                <td>Eye color</td>
+                <td>Birth year</td>
+                <td>Gender</td>
+            </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/static/script.js"></script>
+</body>
+</html>

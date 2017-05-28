@@ -1,0 +1,19 @@
+.first_row {
+    font-weight: bold;
+}
+
+.resident_first_row {
+    font-weight: bold;
+}
+
+.loop_index {
+    display: none;
+}
+
+
+body {
+    background-image: url("/static/star-wars-wallpaper-hd-17.jpg");
+    background-color: rgba(255,255,255,0.7);
+    background-blend-mode: lighten;
+}
+
